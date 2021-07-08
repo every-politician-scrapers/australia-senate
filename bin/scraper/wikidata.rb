@@ -25,6 +25,7 @@ memberships_query = <<SPARQL
     OPTIONAL { ?item rdfs:label ?enLabel FILTER(LANG(?enLabel) = "en") }
     BIND(COALESCE(?sourceName, ?enLabel) AS ?name)
   }
+  ORDER BY ?name
 SPARQL
 
 url = WIKIDATA_SPARQL_URL % CGI.escape(memberships_query)
