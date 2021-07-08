@@ -1,14 +1,10 @@
 #!/bin/env ruby
 # frozen_string_literal: true
 
-require 'cgi'
-require 'csv'
-require 'scraped'
-
-WIKIDATA_SPARQL_URL = 'https://query.wikidata.org/sparql?query=%s'
+require_relative '../../lib/wikidata_query'
 
 # TODO: Add party
-memberships_query = <<SPARQL
+query = <<SPARQL
   SELECT (STRAFTER(STR(?item), STR(wd:)) AS ?wdid) ?name ?state
   WHERE {
     ?item p:P39 ?ps .
@@ -28,10 +24,4 @@ memberships_query = <<SPARQL
   ORDER BY ?name
 SPARQL
 
-url = WIKIDATA_SPARQL_URL % CGI.escape(memberships_query)
-headers = {
-  'User-Agent' => 'every-politican-scrapers/australia-senate',
-  'Accept' => 'text/csv',
-}
-
-puts Scraped::Request.new(url: url, headers: headers).response.body
+puts WikidataQuery.new(query, 'every-politican-scrapers/australia-senate').csv
