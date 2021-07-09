@@ -1,7 +1,7 @@
 #!/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../lib/wikidata_query'
+require 'every_politician_scraper/wikidata_query'
 
 # TODO: Add party
 query = <<SPARQL
@@ -24,4 +24,4 @@ query = <<SPARQL
   ORDER BY ?name
 SPARQL
 
-puts WikidataQuery.new(query, 'every-politican-scrapers/australia-senate').csv
+puts EveryPoliticianScraper::WikidataQuery.new(query, 'every-politican-scrapers/australia-senate').csv
